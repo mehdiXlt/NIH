@@ -1,26 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#define T_Bloc 300
  typedef struct 
  {
    char ch[1000];
- }buffer,bloc;
+ }buffer;
 //ENTETE 
-typedef struct Entete{
+typedef struct {
+    int nb_btete;//le numero de premier bloc 
     int nbbloc;
     int nbenreg;
 }Entete;
+//bloc
+
+typedef struct TBloc{
+typedef struct list *TBloc
+{
+int T[T_Bloc];//tableau d'enregistrement
+int Nb;//le nombre d'enregistrement dans le tableau
+TBloc * suiv;//le nombre de prochain bloc
+}list;
+}TBloc;
+
 //declaration de la strecture enregistrement 
 typedef struct enreg {
- typedef struct lenreg *enreg{
- lenreg  *svt ;
+ typedef struct liste *enreg{
+ liste  *svt ;
     char nom[10];
-    char prenom[10];     }lenreg;
+    char prenom[10];     }liste;
 }enreg;
- 
-typedef struct  LOF{
+ //fichier LOF
+typedef struct {
 Entete entete;
-
-FILE *NIH=NULL;
+FILE *NIH;
  }LOF;
    
     
