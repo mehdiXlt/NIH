@@ -8,10 +8,21 @@
    char ch[1000];
  }buffer;
 
+//declaration de la structure de l'enregistrement 
+typedef struct enreg {
+ 
+    char marque[10];
+    char modele[100];
+    char moteur[100]; 
+    char reference[100];  
+    bool efface ;
+     }enreg;
+ 
+
  //declaration du bloc 
  typedef struct TBloc{
 
-int T[T_Bloc];//tableau d'enregistrement
+enreg T[T_Bloc];//tableau d'enregistrement
 int Nb;//le nombre d'enregistrement dans le tableau
 int suiv;//le nombre de prochain bloc
 
@@ -25,13 +36,7 @@ typedef struct Entete{
 }Entete;
 
 
-//declaration de la structure de l'enregistrement 
-typedef struct enreg {
- lenreg  *svt ;
-    char marque[10];
-    char modele[100];
-    char moteur[100]; 
-    char reference[100];    }lenreg;
+
  
 
 
@@ -141,10 +146,11 @@ void alloc_bloc(LOF *FILLE,int *i,TBloc *buff)
   buff->suiv=-1;//Initialise le champ suiv du bloc buff à -1.
      buff->Nb=0; // Initialise le champ Nb du bloc buff à 0.
   
- for(j=0;j<T_Bloc;j++)//intialise tout les champs de tableau a 0;
+/* for(j=0;j<T_Bloc;j++)//intialise tout les champs de tableau a 0;
  {
-  buff->T[j]=0;
- } 
+  buff->T[j] .=(int)0;
+
+ } */
 modif_entete(FILLE,3,entete(FILLE,3)+1);// Met à jour l'entête du fichier avec la nouvelle valeur obtenue.
 }
 
@@ -176,10 +182,10 @@ void afficherLOF(LOF *l)//a chaque foix quand on crée un bloc on l'affiche
 }
 
                                              /***************************************************/
- void suppression_logique(LOF *FILLE,int cle)
+ void suppression_physique(LOF *FILLE,int cle)
 { 
   bool trouv =false;
-    TBloc buffer,buffer1;
+    TBloc buffer;
 
     int k,j,i,q;         
 
@@ -208,6 +214,30 @@ void afficherLOF(LOF *l)//a chaque foix quand on crée un bloc on l'affiche
       }
     }
 }
+                                           /*************************************/
+
+void suppression_logique(LOF *FILLE,int cle)
+{ 
+  TBloc buffer;
+  bool trouv =false;
+int i,j,q;
+  if(FILLE->NIH!=NULL)
+    {
+       // Recherche séquentielle pour trouver la position de la clé à supprimer
+      rech_sequentielle(FILLE,cle,i,j,q,trouv);
+      //si la cle est trouvé
+      if (trouv)
+       {
+        lecture(FILLE,i,buffer);
+         buffer.T[i].efface=true;
+         ecrire_dir(FILLE,i,&buffer);
+       }
+    }
+}
+
+
+
+
 
 
 
