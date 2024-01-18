@@ -22,7 +22,7 @@ typedef struct enreg {
  
 typedef struct  LOF{
 Entete entete;
-FILE *NIH ;
+FILE  *NIH ;
  }LOF;
  //procedure modification de lentete
  void modif_entete(LOF*FILE,int num,int val)
@@ -78,13 +78,14 @@ if ((mode=='n')||(mode=='N'))//si le mode est nouveau (n,N)
     }
     return FILE;
 }
-//procedure fermeture du fichier 
+//procedure fermeture du fichier +sauvegarde des elements introduit (mise a jour)
 void CLOSED (LOF*FILE)
 {
     rewind(FILE->NIH);
     fwrite(&(FILE->entete),sizeof(Entete),1,FILE->NIH);
     fclose(FILE->NIH);
 }
+
 
   
 int main()
