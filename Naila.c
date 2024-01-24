@@ -1,4 +1,4 @@
-<#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #define T_Bloc 300
@@ -27,11 +27,11 @@ typedef struct Entete{
 
 //declaration de la structure de l'enregistrement 
 typedef struct enreg {
- lenreg  *svt ;
+ voiture  *svt ;
     char marque[10];
     char modele[100];
     char moteur[100]; 
-    char reference[100];    }lenreg;
+    int reference[100];    }voiture;
  
 
 
@@ -246,10 +246,11 @@ void afficherLOF(LOF *l)//a chaque foix quand on crée un bloc on l'affiche
 
     }
 }
-
+ 
+                               
                                    /***************** insertion *******************/
 
-void insertion(LOF*FILE,int cle,tenreg y)
+void insertion(LOF*FILE,int cle,voiture y)
 {
   FILE* NIH
 TBloc buffer , buffer1, new;
@@ -269,7 +270,7 @@ if(!trouv) {
 
   //Sauvegarde du dernier element du bloc et sa position
 
-  tenreg x = buffer.tab[buffer.nb];
+  voiture x = buffer.tab[buffer.nb];
   k=buffer.nb;
 
   //decallage des elements vers la droite pour faire de la place à lelement à inserer
@@ -331,15 +332,79 @@ if(!trouv) {
 
 int main()
 {
+  char marque;
+  char modele;
+  char moteur; 
+  int reference;
+  int choix;
+  int i = 0;
     LOF *f ;
      f->NIH = fopen("AUDI.txt","r+");
    if (f->NIH== NULL)
    {
-       printf("ERREUR !!!!\n");
+      printf("ERREUR !!!!\n");
        return -1;
-   }
 
-    return 0;
-}
+   }
+   do{
+    printf("Bonjour,que souhaitez-vous accomplir comme action aujourdhui ?\n ");
+    printf("1 - ajouter au stock une nouvelle voiture\n");
+    printf("2 - supression d'une voiture vendu\n");
+    printf("3 - rechercher si un modele est disponible en stock\n");
+    printf("4 - annuler\n");
+    scanf("%d",&choix);
+    
+    switch (choix) {
+            case 1:
+                {
+                    voiture car;
+                    printf("Entrez les informations de la nouvelle voiture :\n");
+                    printf("le modele : \n");
+                    scanf("%s", &car.modele);
+                    printf("La reference :\n ");
+                    scanf("%d", &car.reference);
+                    printf("type du moteur:\n ");
+                    scanf("%s", &car.moteur);
+                    printf("La marque : \n");
+                    scanf("%s", &car.marque);
+                    insertion(AUDI,reference,modele);
+                    buf.nb++;
+                    break;
+                }
+            case  2:
+                {
+                    printf("Donnez-moi le numero de reference de la voiture  que vous voulez supprimer : ");
+                    scanf("%d", &reference);
+
+                    Suppression(reference, NIH);
+                    break;
+                }
+             case 3:
+                {
+                    printf("Donnez-moi le numero de reference de la voiture que vous voulez trouver : ");
+                    scanf("%d", &reference);
+
+                    if (rech_sequentielle("AUDI.txt",reference)) {
+                        printf("ce model existe déja ");
+                        afficher(j);
+                    } else {
+                        printf("ce modele est introuvable");
+                    }
+                    break;
+                }
+            case 4:
+            printf("merci de votre visite à bientot ! \n") 
+                break;
+            default:
+                printf("Choix invalide. Veuillez s'il vous plait choisir parmi les options disponibles.\n");
+        }
+
+   }
+   
+    } while (choix != 4 );
+
+    fclose(NIH);
+
+    return 0
 
 
